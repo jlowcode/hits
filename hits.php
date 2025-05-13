@@ -3,38 +3,24 @@
  * Ordering Element
  *
  * @package     Joomla.Plugin
- * @subpackage  Fabrik.element.ordering
- * @copyright   Copyright (C) 2024 Jlowcode Org - All rights reserved.
+ * @subpackage  Fabrik.element.hits
+ * @copyright   Copyright (C) 2025 Jlowcode Org - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\Model\BaseDatabaseModel;
-use Joomla\CMS\Table\Table;
-use Joomla\CMS\Component\ComponentHelper;
-use Joomla\CMS\Layout\LayoutInterface;
-use Joomla\CMS\Filter\InputFilter;
-use Joomla\CMS\Router\Route;
-use Joomla\CMS\Profiler\Profiler;
 use Joomla\CMS\Factory;
-use Joomla\String\StringHelper;
-use Joomla\Registry\Registry;
-use Joomla\Utilities\ArrayHelper;
-use Joomla\CMS\HTML\HTMLHelper;
-use Fabrik\Helpers\Php;
-
 
 /**
  * 	Plugin element to render a tree of the data that user can select the order of the elements
  * 
  * @package     	Joomla.Plugin
- * @subpackage  	Fabrik.element.ordering
+ * @subpackage  	Fabrik.element.hits
  * @since       	4.0
  */
-class PlgFabrik_ElementOrdering extends PlgFabrik_ElementList
+class PlgFabrik_ElementHits extends PlgFabrik_ElementList
 {
 	/**
 	 * Check user can view the read only element OR view in list view
