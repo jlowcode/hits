@@ -40,7 +40,7 @@ class PlgFabrik_ElementHits extends PlgFabrik_ElementList
 	 * Increments the access (views) counter
 	 * each time the record is loaded.
 	 * 
-	 * @return void
+	 * @return 		Void
 	 */
 	public function onLoad() 
 	{
@@ -70,11 +70,26 @@ class PlgFabrik_ElementHits extends PlgFabrik_ElementList
 	/**
     * Is the element hidden or not - if not set then return false
     *
-    * @return  bool
+    * @return		Bool
     */
 	public function isHidden()
 	{
 		return true;
 	}
 	
+	/**
+	 * Run right before the form processing
+	 * keeps the data to be processed or sent if consent is not given
+	 *
+	 * @return		Bool
+	 */
+	public function onBeforeProcess()
+	{
+		$formModel = $this->getFormModel();
+		$elementName = $this->getHTMLid();
+
+		$hits = ((int) $formModel->formData[$elementName][0])+1;
+		$formModel->formData[$elementName][0] = $hits;
+		$formModel->formData[$elementName.'_raw'][0] = $hits;
+	}
 }
