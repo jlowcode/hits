@@ -74,8 +74,7 @@ class PlgFabrik_ElementHits extends PlgFabrik_ElementList
     */
 	public function isHidden()
 	{
-		$element = $this->getElement();
-		return ($element->hidden == true) ? true : false;
+		return true;
 	}
 	
 }
