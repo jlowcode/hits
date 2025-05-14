@@ -11,7 +11,7 @@
 	<description>PLG_FABRIK_ELEMENT_HITS_DESCRIPTION</description>
 
 	<files>
-		<filename plugin="ordering">hits.php</filename>
+		<filename plugin="hits">hits.php</filename>
 		<filename>index.html</filename>
 		<folder>language</folder>
 	</files>

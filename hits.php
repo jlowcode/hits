@@ -1,6 +1,6 @@
 <?php
 /**
- * Ordering Element
+ * Hits Element
  *
  * @package     Joomla.Plugin
  * @subpackage  Fabrik.element.hits
@@ -65,6 +65,17 @@ class PlgFabrik_ElementHits extends PlgFabrik_ElementList
 			->where($db->qn('id') . ' = ' . $db->q($rowId));
 		$db->setQuery($query);
 		$db->execute();
+	}
+
+	/**
+    * Is the element hidden or not - if not set then return false
+    *
+    * @return  bool
+    */
+	public function isHidden()
+	{
+		$element = $this->getElement();
+		return ($element->hidden == true) ? true : false;
 	}
 	
 }
