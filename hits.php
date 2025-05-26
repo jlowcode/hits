@@ -57,7 +57,7 @@ class PlgFabrik_ElementHits extends PlgFabrik_ElementList
 			->from($db->qn($table))
 			->where($db->qn('id') . ' = ' . $db->q($rowId));
 		$db->setQuery($query);
-		$hits = $db->loadResult()+1;
+		$hits = ((int)$db->loadResult())+1;
 
 		$query = $db->getQuery(true);
 		$query->update($db->qn($table))
@@ -87,6 +87,9 @@ class PlgFabrik_ElementHits extends PlgFabrik_ElementList
 	{
 		$formModel = $this->getFormModel();
 		$elementName = $this->getHTMLid();
+		$input = $this->app->getInput();
+
+		if($input->getBool('metadata_extract')) return true;
 
 		$hits = ((int) $formModel->formData[$elementName][0])+1;
 		$formModel->formData[$elementName][0] = $hits;
