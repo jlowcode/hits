@@ -1,40 +1,26 @@
 <?php
 /**
- * Ordering Element
+ * Hits Element
  *
  * @package     Joomla.Plugin
- * @subpackage  Fabrik.element.ordering
- * @copyright   Copyright (C) 2024 Jlowcode Org - All rights reserved.
+ * @subpackage  Fabrik.element.hits
+ * @copyright   Copyright (C) 2025 Jlowcode Org - All rights reserved.
  * @license     GNU/GPL http://www.gnu.org/copyleft/gpl.html
  */
 
 // No direct access
 defined('_JEXEC') or die('Restricted access');
 
-use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\Model\BaseDatabaseModel;
-use Joomla\CMS\Table\Table;
-use Joomla\CMS\Component\ComponentHelper;
-use Joomla\CMS\Layout\LayoutInterface;
-use Joomla\CMS\Filter\InputFilter;
-use Joomla\CMS\Router\Route;
-use Joomla\CMS\Profiler\Profiler;
 use Joomla\CMS\Factory;
-use Joomla\String\StringHelper;
-use Joomla\Registry\Registry;
-use Joomla\Utilities\ArrayHelper;
-use Joomla\CMS\HTML\HTMLHelper;
-use Fabrik\Helpers\Php;
-
 
 /**
  * 	Plugin element to render a tree of the data that user can select the order of the elements
  * 
  * @package     	Joomla.Plugin
- * @subpackage  	Fabrik.element.ordering
+ * @subpackage  	Fabrik.element.hits
  * @since       	4.0
  */
-class PlgFabrik_ElementOrdering extends PlgFabrik_ElementList
+class PlgFabrik_ElementHits extends PlgFabrik_ElementList
 {
 	/**
 	 * Check user can view the read only element OR view in list view
@@ -54,7 +40,7 @@ class PlgFabrik_ElementOrdering extends PlgFabrik_ElementList
 	 * Increments the access (views) counter
 	 * each time the record is loaded.
 	 * 
-	 * @return void
+	 * @return 		Void
 	 */
 	public function onLoad() 
 	{
@@ -71,7 +57,7 @@ class PlgFabrik_ElementOrdering extends PlgFabrik_ElementList
 			->from($db->qn($table))
 			->where($db->qn('id') . ' = ' . $db->q($rowId));
 		$db->setQuery($query);
-		$hits = $db->loadResult()+1;
+		$hits = ((int)$db->loadResult())+1;
 
 		$query = $db->getQuery(true);
 		$query->update($db->qn($table))
@@ -80,5 +66,33 @@ class PlgFabrik_ElementOrdering extends PlgFabrik_ElementList
 		$db->setQuery($query);
 		$db->execute();
 	}
+
+	/**
+    * Is the element hidden or not - if not set then return false
+    *
+    * @return		Bool
+    */
+	public function isHidden()
+	{
+		return true;
+	}
 	
+	/**
+	 * Run right before the form processing
+	 * keeps the data to be processed or sent if consent is not given
+	 *
+	 * @return		Bool
+	 */
+	public function onBeforeProcess()
+	{
+		$formModel = $this->getFormModel();
+		$elementName = $this->getHTMLid();
+		$input = $this->app->getInput();
+
+		if($input->getBool('metadata_extract')) return true;
+
+		$hits = ((int) $formModel->formData[$elementName][0])+1;
+		$formModel->formData[$elementName][0] = $hits;
+		$formModel->formData[$elementName.'_raw'][0] = $hits;
+	}
 }
